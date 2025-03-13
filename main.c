@@ -86,9 +86,4 @@ int main(int argc, char *argv[]) {
             printf("Processor has been reset to its default state.\n");
         }
     }
-
-    print_genregs(gen_reg, GEN_REG_NUM);
-    printf("\n");
-
-    print_genregs(gen_reg, GEN_REG_NUM);
 }
