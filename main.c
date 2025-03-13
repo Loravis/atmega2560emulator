@@ -9,7 +9,7 @@
 #define GEN_REG_NUM 32
 
 int main(int argc, char *argv[]) {
-    printf("AtMega2560 microcontroller emulator\nType h to view a list of commands.\n\n");
+    printf("AtMega2560 microcontroller emulator\nType help to view a list of commands.\n\n");
 
     // 8 bit general purpose registers
     unsigned char gen_reg[GEN_REG_NUM];
@@ -84,6 +84,8 @@ int main(int argc, char *argv[]) {
                 gen_reg[i] = 0;
             }
             printf("Processor has been reset to its default state.\n");
+        } else if (input == COM_HELP) {
+            show_help();
         }
     }
 }

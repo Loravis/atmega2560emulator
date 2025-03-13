@@ -18,7 +18,20 @@ int run_shell() {
         return COM_RUN;
     } else if (strcmp(buf, "reset") == 0) { // reset registers, storage, etc...
         return COM_RESET;
+    } else if (strcmp(buf, "help") == 0) {
+        return COM_HELP;
     }
 
     return COM_UNKNOWN;
+}
+
+// Show help test
+void show_help() {
+    printf("\nCommands: \n--------------------------------\n");
+    printf("%-10s %s\n", "help", "Show this help text.");
+    printf("%-10s %s\n", "sf", "Show stored program.");
+    printf("%-10s %s\n", "run", "Run stored program.");
+    printf("%-10s %s\n", "sgr", "Display contents of general purpose registers.");
+    printf("%-10s %s\n", "exit", "Quit.");
+    printf("\n");
 }
