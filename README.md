@@ -18,4 +18,4 @@ make
 ./emul2560 <file>
 ```
 
-You must provide the program with a .hex file, formatted in the Intel HEX format.
+You must provide the program with a .hex file, formatted in the Intel HEX format. You may find an example in the examples directory.
