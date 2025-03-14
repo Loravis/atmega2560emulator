@@ -22,4 +22,4 @@ int print_genregs_table(unsigned char* registers, int num);
 int run_shell();
 void show_help();
 
-int run_instruction(unsigned int opcode, unsigned int operand, unsigned char(*gen_reg)[32]);
+int run_instruction(unsigned int opcode, unsigned int operand, unsigned char(*gen_reg)[32], int* insptr);

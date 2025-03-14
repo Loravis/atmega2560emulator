@@ -67,15 +67,17 @@ int main(int argc, char *argv[]) {
             for (int i = 0; i < inslen / (int)sizeof(instruction_t); i++) {
                 if (instructions[i].opcode == OPCODE_INC) {
                     printf("%d: inc r%02d\n", i, instructions[i].operand);
-                }
+                } else if (instructions[i].opcode == OPCODE_RJMP) {
+                    printf("%d: rjmp .%d\n", i, instructions[i].operand);
+                } 
             }
             printf("\n");
         } else if (input == COM_SHOWGENREGS) {
             print_genregs_table(gen_reg, GEN_REG_NUM);
         } else if (input == COM_RUN) {
             //TODO: Implement breakpoints
-            for (int i = 0; i < inslen / (int)sizeof(instruction_t); i++) {
-                run_instruction(instructions[i].opcode, instructions[i].operand, &gen_reg);
+            for (int insptr = 0; insptr < inslen / (int)sizeof(instruction_t); insptr++) {
+                run_instruction(instructions[insptr].opcode, instructions[insptr].operand, &gen_reg, &insptr);
             }
             printf("Program %s executed successfully.\n", argv[1]);
         } else if (input == COM_RESET) {
