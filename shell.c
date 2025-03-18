@@ -3,7 +3,7 @@
 #include "misc.h"
 
 // Take user input, verify that it's valid and return a code based on what was entered
-int run_shell() {
+int run_shell(char* params) {
     char buf[255]; // User input buffer
     printf("(emul): ");
     scanf("%254s", buf);

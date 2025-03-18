@@ -31,7 +31,7 @@ int strcut(char** dest, unsigned int start, unsigned int end, char * str);
 int print_genregs(unsigned char* registers, int num);
 int print_genregs_table(unsigned char* registers, int num);
 
-int run_shell();
+int run_shell(char* params);
 void show_help();
 
 int run_instruction(unsigned int opcode, unsigned int operand, unsigned char(*gen_reg)[32], int* insptr, unsigned char* sreg);

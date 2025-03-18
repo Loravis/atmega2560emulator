@@ -22,6 +22,9 @@ int main(int argc, char *argv[]) {
     // Initialize status register
     unsigned char sreg = 0b00000000;
 
+    // Initialize breakpoint storage
+    int* breakpoints = malloc(0);
+
     // Initialize variables for decoding
     FILE *stream;
     char *line = NULL;
@@ -55,11 +58,15 @@ int main(int argc, char *argv[]) {
 
     // Start the program's main loop
     while (1) {
-        int input = run_shell();
+        char params[254];
+        int input = run_shell(params);
         if (input == COM_UNKNOWN) {
             printf("Invalid command entered. Type h to view a list of valid commands.\n");
         } else if (input == COM_EXIT) {
             printf("Exiting...\n");
+
+            // Cleanup
+            free(breakpoints);
             free(instructions);
             free(line);
             fclose(stream);
