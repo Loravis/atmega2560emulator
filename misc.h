@@ -11,7 +11,8 @@ typedef enum {
     COM_RUN = 3,
     COM_RESET = 4,
     COM_HELP = 5,
-    COM_SHOWSFLAGS = 6
+    COM_SHOWSFLAGS = 6,
+    COM_ADDBREAKPOINT = 7
 } user_commands_t;
 
 typedef enum {
@@ -31,7 +32,7 @@ int strcut(char** dest, unsigned int start, unsigned int end, char * str);
 int print_genregs(unsigned char* registers, int num);
 int print_genregs_table(unsigned char* registers, int num);
 
-int run_shell(char* params);
+int run_shell(char* strparams, int* numparam);
 void show_help();
 
 int run_instruction(unsigned int opcode, unsigned int operand, unsigned char(*gen_reg)[32], int* insptr, unsigned char* sreg);

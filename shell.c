@@ -3,7 +3,7 @@
 #include "misc.h"
 
 // Take user input, verify that it's valid and return a code based on what was entered
-int run_shell(char* params) {
+int run_shell(char* strparams, int* numparam) {
     char buf[255]; // User input buffer
     printf("(emul): ");
     scanf("%254s", buf);
@@ -22,6 +22,12 @@ int run_shell(char* params) {
         return COM_HELP;
     } else if (strcmp(buf, "ssf") == 0) { // Show status flags 
         return COM_SHOWSFLAGS;
+    } else if (strcmp(buf, "bp") == 0) { // Set breakpoint
+        printf("(breakpoint): ");
+        if (scanf("%d", numparam) == 0) {
+            printf("ERROR: A number must be entered");
+        }
+        return COM_ADDBREAKPOINT;
     }
 
     return COM_UNKNOWN;

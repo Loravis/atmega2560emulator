@@ -22,8 +22,13 @@ int main(int argc, char *argv[]) {
     // Initialize status register
     unsigned char sreg = 0b00000000;
 
+    // Initialize instruction pointer
+    int insptr = 0;
+
     // Initialize breakpoint storage
-    int* breakpoints = malloc(0);
+    int breakpoint_n = 0;
+    int* breakpoints = malloc(breakpoint_n);
+    int breakpoint_active = 0; // Used to determine whether the run command should reset the instruction pointer or not.
 
     // Initialize variables for decoding
     FILE *stream;
@@ -59,7 +64,9 @@ int main(int argc, char *argv[]) {
     // Start the program's main loop
     while (1) {
         char params[255];
-        int input = run_shell(params);
+        int numparam = -1;
+
+        int input = run_shell(params, &numparam);
         if (input == COM_UNKNOWN) {
             printf("Invalid command entered. Type h to view a list of valid commands.\n");
         } else if (input == COM_EXIT) {
@@ -85,8 +92,25 @@ int main(int argc, char *argv[]) {
         } else if (input == COM_SHOWGENREGS) {
             print_genregs_table(gen_reg, GEN_REG_NUM);
         } else if (input == COM_RUN) {
-            //TODO: Implement breakpoints
-            for (int insptr = 0; insptr < inslen / (int)sizeof(instruction_t); insptr++) {
+            if (breakpoint_active == 0) {
+                insptr = 0;
+            } else {
+                breakpoint_active = 0;
+            }
+
+            for (; insptr < inslen / (int)sizeof(instruction_t); insptr++) {
+                for (int i = 0; i < breakpoint_n; i++) {
+                    if (insptr == breakpoints[i]) {
+                        breakpoint_active = 1;
+                        break;
+                    }
+                }
+
+                if (breakpoint_active == 1) {
+                    printf("\nReached breakpoint at instruction #%d.\n\n", insptr);
+                    break;
+                }
+
                 run_instruction(instructions[insptr].opcode, instructions[insptr].operand, &gen_reg, &insptr, &sreg);
             }
             printf("Program %s executed successfully.\n", argv[1]);
@@ -95,11 +119,20 @@ int main(int argc, char *argv[]) {
             for (int i = 0; i < GEN_REG_NUM; i++) {
                 gen_reg[i] = 0;
             }
+
+            // Reset instruction pointer
+            insptr = 0;
+
             printf("Processor has been reset to its default state.\n");
         } else if (input == COM_HELP) {
             show_help();
         } else if (input == COM_SHOWSFLAGS) {
             print_statusflags(&sreg);
+        } else if (input == COM_ADDBREAKPOINT && numparam >= 0) {
+            breakpoint_n++;
+            breakpoints = realloc(breakpoints, sizeof(int) * breakpoint_n);
+            breakpoints[breakpoint_n - 1] = numparam;
+            printf("Breakpoint added at instruction #%d\n", numparam);
         }
     }
 }
