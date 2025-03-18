@@ -33,6 +33,7 @@ instruction_t* decode(instruction_t** instructions, char *str, unsigned long len
             int16_t operandmask = (int16_t)~OPCODEMASK_RJMP;
             int16_t operand = instruction & operandmask;
             
+            // Ensure values stored as two's complement (negative) are decoded correctly
             if ((operand & 0b100000000000) != 0) {
                 operand = ((~operand & operandmask) + 1) * -1;
             } else {
