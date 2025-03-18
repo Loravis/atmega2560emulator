@@ -20,18 +20,21 @@ int run_shell() {
         return COM_RESET;
     } else if (strcmp(buf, "help") == 0) {
         return COM_HELP;
+    } else if (strcmp(buf, "ssf") == 0) { // Show status flags 
+        return COM_SHOWSFLAGS;
     }
 
     return COM_UNKNOWN;
 }
 
-// Show help test
+// Show help text
 void show_help() {
     printf("\nCommands: \n--------------------------------\n");
     printf("%-10s %s\n", "help", "Show this help text.");
     printf("%-10s %s\n", "sf", "Show stored program.");
     printf("%-10s %s\n", "run", "Run stored program.");
     printf("%-10s %s\n", "sgr", "Display contents of general purpose registers.");
+    printf("%-10s %s\n", "ssf", "Display contents of the status register.");
     printf("%-10s %s\n", "exit", "Quit.");
     printf("\n");
 }

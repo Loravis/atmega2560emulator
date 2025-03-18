@@ -19,6 +19,9 @@ int main(int argc, char *argv[]) {
         gen_reg[i] = 0;
     }
 
+    // Initialize status register
+    unsigned char sreg = 0b00000000;
+
     // Initialize variables for decoding
     FILE *stream;
     char *line = NULL;
@@ -77,7 +80,7 @@ int main(int argc, char *argv[]) {
         } else if (input == COM_RUN) {
             //TODO: Implement breakpoints
             for (int insptr = 0; insptr < inslen / (int)sizeof(instruction_t); insptr++) {
-                run_instruction(instructions[insptr].opcode, instructions[insptr].operand, &gen_reg, &insptr);
+                run_instruction(instructions[insptr].opcode, instructions[insptr].operand, &gen_reg, &insptr, &sreg);
             }
             printf("Program %s executed successfully.\n", argv[1]);
         } else if (input == COM_RESET) {
@@ -88,6 +91,8 @@ int main(int argc, char *argv[]) {
             printf("Processor has been reset to its default state.\n");
         } else if (input == COM_HELP) {
             show_help();
+        } else if (input == COM_SHOWSFLAGS) {
+            print_statusflags(&sreg);
         }
     }
 }
