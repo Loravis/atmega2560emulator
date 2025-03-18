@@ -58,7 +58,7 @@ int main(int argc, char *argv[]) {
 
     // Start the program's main loop
     while (1) {
-        char params[254];
+        char params[255];
         int input = run_shell(params);
         if (input == COM_UNKNOWN) {
             printf("Invalid command entered. Type h to view a list of valid commands.\n");
