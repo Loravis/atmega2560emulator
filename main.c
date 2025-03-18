@@ -99,19 +99,21 @@ int main(int argc, char *argv[]) {
             }
 
             for (; insptr < inslen / (int)sizeof(instruction_t); insptr++) {
+                run_instruction(instructions[insptr].opcode, instructions[insptr].operand, &gen_reg, &insptr, &sreg);
+                
+                // Check if the next instruction has a breakpoint
                 for (int i = 0; i < breakpoint_n; i++) {
-                    if (insptr == breakpoints[i]) {
+                    if (insptr + 1 == breakpoints[i]) {
                         breakpoint_active = 1;
                         break;
                     }
                 }
 
                 if (breakpoint_active == 1) {
+                    insptr++;
                     printf("\nReached breakpoint at instruction #%d.\n\n", insptr);
                     break;
                 }
-
-                run_instruction(instructions[insptr].opcode, instructions[insptr].operand, &gen_reg, &insptr, &sreg);
             }
             printf("Program %s executed successfully.\n", argv[1]);
         } else if (input == COM_RESET) {
