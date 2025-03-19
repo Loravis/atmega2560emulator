@@ -37,6 +37,7 @@ void show_help();
 
 int run_instruction(unsigned int opcode, unsigned int operand, unsigned char(*gen_reg)[32], int* insptr, unsigned char* sreg);
 void disasm_insmem(instruction_t* instructions, int* inslen);
+void get_5bit_dest_src(unsigned int operand, char* src, char* dest);
 
 void set_statusflag(unsigned char* sreg, int flag, unsigned int value);
 unsigned int get_statusflag(unsigned char* sreg, char flag);

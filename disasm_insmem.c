@@ -10,7 +10,13 @@ void disasm_insmem(instruction_t *instructions, int *inslen) {
             printf("%d: inc r%02d\n", i, instructions[i].operand);
         } else if (instructions[i].opcode == OPCODE_RJMP) {
             printf("%d: rjmp .%d\n", i, instructions[i].operand);
-        } 
+        } else if (instructions[i].opcode == OPCODE_ADD) {
+            char src;
+            char dest;
+            get_5bit_dest_src(instructions[i].operand, &src, &dest);
+
+            printf("%d: add r%02d, r%02d\n", i, dest, src);
+        }
     }
     printf("\n");
 }
