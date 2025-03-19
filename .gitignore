@@ -1,1 +1,4 @@
 emul2560
+./examples/program.elf
+./examples/program.hex
+./examples/program.o
