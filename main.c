@@ -32,17 +32,19 @@ int main(int argc, char *argv[]) {
 
     // Initialize variables for decoding
     FILE *stream;
-    char *line = NULL;
+    char *line = NULL; // String containing a line of the read file
     int inslen = 0;
     instruction_t *instructions = NULL;
     size_t len = 0; 
-    ssize_t nread; // string length
+    ssize_t nread; // string character count
 
+    // Check if a valid number of arguments was provided
     if (argc != 2) {
         fprintf(stderr, "Usage: %s <file>\n", argv[0]);
         return 1;
     }
 
+    // Open file stream for reading
     stream = fopen(argv[1], "r");
     if (stream == NULL) {
         perror("fopen");
@@ -61,8 +63,9 @@ int main(int argc, char *argv[]) {
 
     printf("Program %s flashed successfully!\nType sf to view the loaded program.\n\n", argv[1]);
 
-    // Start the program's main loop
+    // The program's main loop repeatedly opens a shell prompt and processes commands provided by the user.
     while (1) {
+        // These two variables are defined to hold any parameters that are provided with certain shell commands
         char params[255];
         int numparam = -1;
 
@@ -92,30 +95,37 @@ int main(int argc, char *argv[]) {
         } else if (input == COM_SHOWGENREGS) {
             print_genregs_table(gen_reg, GEN_REG_NUM);
         } else if (input == COM_RUN) {
+
+            // If there's no active breakpoint, the program starts from the beginning.
+            // If there is an active breakpoint, the breakpoint is deactivated and the program continues where it left off
             if (breakpoint_active == 0) {
                 insptr = 0;
             } else {
                 breakpoint_active = 0;
             }
-
+            
+            // Program execution loop, calls the run_instruction method repeatedly until the end of the program is reached
             for (; insptr < inslen / (int)sizeof(instruction_t); insptr++) {
                 run_instruction(instructions[insptr].opcode, instructions[insptr].operand, &gen_reg, &insptr, &sreg);
                 
-                // Check if the next instruction has a breakpoint
+                // Loop through the breakpoint storage and check if a breakpoint for the next instruction could be found.
+                // If that's the case, the instruction pointer is incremented and the program execution loop is immediately exited.
                 for (int i = 0; i < breakpoint_n; i++) {
                     if (insptr + 1 == breakpoints[i]) {
                         breakpoint_active = 1;
                         break;
                     }
-                }
-
-                if (breakpoint_active == 1) {
+                } if (breakpoint_active == 1) {
                     insptr++;
                     printf("\nReached breakpoint at instruction #%d.\n\n", insptr);
                     break;
                 }
             }
-            printf("Program %s executed successfully.\n", argv[1]);
+            
+            // Display a success message once the program fully finishes executing
+            if (breakpoint_active == 0) {
+                printf("Program %s executed successfully.\n", argv[1]);
+            }
         } else if (input == COM_RESET) {
             // Reset registers
             for (int i = 0; i < GEN_REG_NUM; i++) {
