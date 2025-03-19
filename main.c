@@ -33,7 +33,7 @@ int main(int argc, char *argv[]) {
     // Initialize variables for decoding
     FILE *stream;
     char *line = NULL; // String containing a line of the read file
-    int inslen = 0;
+    int inslen = 0; // Number of instructions
     instruction_t *instructions = NULL;
     size_t len = 0; 
     ssize_t nread; // string character count
@@ -82,16 +82,7 @@ int main(int argc, char *argv[]) {
             fclose(stream);
             return 0;
         } else if (input == COM_SHOWFLASH) {
-            // TODO: Wrap this functionality in a function to clean this segment up
-            printf("\nInstruction memory:\n--------------------------------\n");
-            for (int i = 0; i < inslen / (int)sizeof(instruction_t); i++) {
-                if (instructions[i].opcode == OPCODE_INC) {
-                    printf("%d: inc r%02d\n", i, instructions[i].operand);
-                } else if (instructions[i].opcode == OPCODE_RJMP) {
-                    printf("%d: rjmp .%d\n", i, instructions[i].operand);
-                } 
-            }
-            printf("\n");
+            disasm_insmem(instructions, &inslen);
         } else if (input == COM_SHOWGENREGS) {
             print_genregs_table(gen_reg, GEN_REG_NUM);
         } else if (input == COM_RUN) {

@@ -36,6 +36,7 @@ int run_shell(char* strparams, int* numparam);
 void show_help();
 
 int run_instruction(unsigned int opcode, unsigned int operand, unsigned char(*gen_reg)[32], int* insptr, unsigned char* sreg);
+void disasm_insmem(instruction_t* instructions, int* inslen);
 
 void set_statusflag(unsigned char* sreg, int flag, unsigned int value);
 unsigned int get_statusflag(unsigned char* sreg, char flag);
