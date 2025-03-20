@@ -126,6 +126,10 @@ int main(int argc, char *argv[]) {
             // Reset instruction pointer
             insptr = 0;
 
+            // Reset breakpoint
+            // Note: Breakpoints are not deleted. There will be an additional command for that
+            breakpoint_active = 0;
+
             printf("Processor has been reset to its default state.\n");
         } else if (input == COM_HELP) {
             show_help();
