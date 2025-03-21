@@ -63,13 +63,13 @@ int run_instruction(unsigned int opcode, unsigned int operand, unsigned char(*ge
             set_statusflag(sreg, SFLAG_HALFCARRY, 0);
         }
         
-        set_signbit(sreg);
-
         if ((char)*gen_reg[dest] < 0) {
             set_statusflag(sreg, SFLAG_NEGATIVE, 1);
         } else {
             set_statusflag(sreg, SFLAG_NEGATIVE, 0);
         }
+
+        set_signbit(sreg);
 
         if (*gen_reg[dest] == 0) {
             set_statusflag(sreg, SFLAG_ZERO, 1);

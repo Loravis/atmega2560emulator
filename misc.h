@@ -43,4 +43,8 @@ void set_statusflag(unsigned char* sreg, int flag, unsigned int value);
 unsigned int get_statusflag(unsigned char* sreg, char flag);
 void print_statusflags(unsigned char* sreg);
 
+/*
+Functions for setting status flags during instruction execution
+*/
 void set_signbit(unsigned char* sreg);
+void check_negative_zero(unsigned char* sreg, unsigned char* gen_reg, char dest);
