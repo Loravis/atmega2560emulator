@@ -49,6 +49,13 @@ instruction_t* decode(instruction_t** instructions, char *str, unsigned long len
             (*instructions)[(*inslen / sizeof(instruction_t)) - 1].opcode = OPCODE_ADD;
             (*instructions)[(*inslen / sizeof(instruction_t)) - 1].operand = (instruction & (~OPCODEMASK_ADD));
         }
+
+        else if ((instruction & OPCODEMASK_ADC) == OPCODE_ADC) {
+            *inslen += sizeof(instruction_t);
+            *instructions = realloc(*instructions, *inslen);
+            (*instructions)[(*inslen / sizeof(instruction_t)) - 1].opcode = OPCODE_ADC;
+            (*instructions)[(*inslen / sizeof(instruction_t)) - 1].operand = (instruction & (~OPCODEMASK_ADC));
+        }
     }
     free(part);
     return *instructions;

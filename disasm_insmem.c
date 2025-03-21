@@ -16,6 +16,12 @@ void disasm_insmem(instruction_t *instructions, int *inslen) {
             get_5bit_dest_src(instructions[i].operand, &src, &dest);
 
             printf("%d: add r%02d, r%02d\n", i, dest, src);
+        } else if (instructions[i].opcode == OPCODE_ADC) {
+            char src;
+            char dest;
+            get_5bit_dest_src(instructions[i].operand, &src, &dest);
+
+            printf("%d: adc r%02d, r%02d\n", i, dest, src);
         }
     }
     printf("\n");
