@@ -21,8 +21,7 @@ int run_instruction(unsigned int opcode, unsigned int operand, unsigned char(*ge
             set_statusflag(sreg, SFLAG_NEGATIVE, 0);
         }
 
-        // Set sign bit
-        set_statusflag(sreg, SFLAG_SIGNBIT, get_statusflag(sreg, SFLAG_TWOCOMPOVERFLOW) ^ get_statusflag(sreg, SFLAG_NEGATIVE));
+        set_signbit(sreg);
 
         if (*gen_reg[operand] == 0) {
             set_statusflag(sreg, SFLAG_ZERO, 1);
@@ -64,8 +63,7 @@ int run_instruction(unsigned int opcode, unsigned int operand, unsigned char(*ge
             set_statusflag(sreg, SFLAG_HALFCARRY, 0);
         }
         
-        // Set sign bit
-        set_statusflag(sreg, SFLAG_SIGNBIT, get_statusflag(sreg, SFLAG_TWOCOMPOVERFLOW) ^ get_statusflag(sreg, SFLAG_NEGATIVE));
+        set_signbit(sreg);
 
         if ((char)*gen_reg[dest] < 0) {
             set_statusflag(sreg, SFLAG_NEGATIVE, 1);

@@ -83,3 +83,8 @@ void print_statusflags(unsigned char* sreg) {
     printf("%-40s %d\n", "Global Interrupt Enable (I)", get_statusflag(sreg, SFLAG_GLOBALINTERRUPTENABLE));
     printf("\n");
 }
+
+// Set the sign bit based on the two's complement overflow and negative flags
+void set_signbit(unsigned char *sreg) {
+    set_statusflag(sreg, SFLAG_SIGNBIT, get_statusflag(sreg, SFLAG_TWOCOMPOVERFLOW) ^ get_statusflag(sreg, SFLAG_NEGATIVE));
+}

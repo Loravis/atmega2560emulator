@@ -42,3 +42,5 @@ void get_5bit_dest_src(unsigned int operand, char* src, char* dest);
 void set_statusflag(unsigned char* sreg, int flag, unsigned int value);
 unsigned int get_statusflag(unsigned char* sreg, char flag);
 void print_statusflags(unsigned char* sreg);
+
+void set_signbit(unsigned char* sreg);
