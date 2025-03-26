@@ -22,6 +22,11 @@ void disasm_insmem(instruction_t *instructions, int *inslen) {
             get_5bit_dest_src(instructions[i].operand, &src, &dest);
 
             printf("%d: adc r%02d, r%02d\n", i, dest, src);
+        } else if (instructions[i].opcode == OPCODE_ADIW) {
+            char dest = (instructions[i].operand >> 4) & 0b00000011;
+            char value = ((instructions[i].operand & 0b11000000) >> 2) | (instructions[i].operand & 0b1111);
+
+            printf("%d: adiw r%02d, %d\n", i, dest * 2 + 24, value);
         }
     }
     printf("\n");
