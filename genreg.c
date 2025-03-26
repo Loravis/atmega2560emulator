@@ -1,18 +1,10 @@
 #include <stdio.h>
 
-void print_genregs(unsigned char* registers, int num) {
-    printf("\nGeneral purpose registers:\n--------------------------------\n");
-    for (int i = 0; i < num; i++) {
-        printf("r%02d: %d\n", i, (int)registers[i]);
-    }
-    printf("\n");
-}
-
 void print_genregs_table(unsigned char* registers, int num) {
     printf("\nGeneral purpose registers:\n--------------------------------\n");
 
     for (int i = 0; i < num; i++) {
-        printf("r%02d: 0x%02d", i, (int)registers[i]); // Print register and value
+        printf("r%02d: 0x%02x", i, (int)registers[i]); // Print register and value
 
         if ((i + 1) % 3 == 0) { // Check if we've printed 3 columns
             printf("\n"); // Start a new row
