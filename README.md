@@ -1,8 +1,12 @@
 # atmega2560 emulator
 
-This is a minimalistic software emulator for the atmega2560 microcontroller, which can decode and run .hex files, containing machine code for the atmega2560, as if they were flashed and run on the actual processor.
+This is a work-in-progress minimalistic software emulator for the atmega2560 microcontroller, which can decode and run .hex files, containing machine code for the atmega2560, as if they were flashed and run on the actual processor.
 
-**Note:** It's currently unfinished. As of right now, the instructions **inc**, **add** and **rjmp** are supported.
+### Currently supported instructions: 
+- add (add without carry)
+- adc (add with carry)
+- rjmp (relative jump)
+- inc (increment)
 
 ## Building from source
 Ensure a C compiler (clang, gcc, etc) and GNU make are installed on your system. 
