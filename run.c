@@ -1,6 +1,5 @@
 #include "misc.h"
 #include "instructionset.h"
-#include <stdio.h>
 
 // Instructions are run according to how they're meant to run on the atmega2560. 
 // This function's functionality is derived from the AVR Instruction Set Manual, linked below.
