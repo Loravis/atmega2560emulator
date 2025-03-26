@@ -1,5 +1,6 @@
 #include "misc.h"
 #include "instructionset.h"
+#include <stdio.h>
 
 // Instructions are run according to how they're meant to run on the atmega2560. 
 // This function's functionality is derived from the AVR Instruction Set Manual, linked below.
@@ -122,6 +123,24 @@ int run_instruction(unsigned int opcode, unsigned int operand, unsigned char(*ge
         } else {
             set_statusflag(sreg, SFLAG_ZERO, 0);
         }
+    }
+
+    // ADIW (add immediate to word) instruction logic
+    else if (opcode == OPCODE_ADIW) {
+        char dest = (operand >> 4) & 0b00000011;
+        char value = ((operand & 0b11000000) >> 2) | (operand & 0b1111);
+
+        unsigned short old = (*gen_reg)[dest * 2 + 24] << 8 | (*gen_reg)[dest * 2 + 24 + 1];
+        unsigned short new = old + value;
+
+        if (old == 0b0111111111111111) { // Handle two's complement overflow
+            set_statusflag(sreg, SFLAG_TWOCOMPOVERFLOW, 1);
+        } else {
+            set_statusflag(sreg, SFLAG_TWOCOMPOVERFLOW, 0);
+        } 
+
+        (*gen_reg)[dest * 2 + 24 + 1] = new >> 8;
+        (*gen_reg)[dest * 2 + 24] = new & 0xFF;
     }
 
     return 0;
