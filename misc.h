@@ -29,7 +29,6 @@ typedef enum {
 instruction_t* decode(instruction_t** instructions, char* str, unsigned long len, int* inslen);
 int strcut(char** dest, unsigned int start, unsigned int end, char * str);
 
-int print_genregs(unsigned char* registers, int num);
 int print_genregs_table(unsigned char* registers, int num);
 
 int run_shell(char* strparams, int* numparam);
